@@ -14,6 +14,12 @@ class cardNode{
         void set_card(Card _card){
             card = _card;
         }
+        cardNode * get_next(){
+            return next;
+        }
+        void set_next(cardNode * nNode){
+            next = nNode;
+        }
         cardNode(){
             card = Card();
             next = NULL;
