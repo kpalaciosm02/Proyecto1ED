@@ -23,6 +23,9 @@ class Card{
         void set_name(string _name){
             name = _name;
         }
+        void cleanPrint(){
+            cout << name;
+        }
 };
 
 #endif
