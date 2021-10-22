@@ -31,6 +31,9 @@ class God{
         void set_name(string _name){
             name = _name;
         }
+        void clearPrint(){
+            cout << name << ":" << followers;
+        }
 };
 
 #endif

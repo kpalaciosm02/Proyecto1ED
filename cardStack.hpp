@@ -32,6 +32,15 @@ class cardStack{
                 return top;
             }
         }
+        cardNode * pop(){
+            if (isEmpty())
+                cout << "Empty Stack given" << endl;
+            else{
+                cardNode * tmp = top;
+                top = top->get_next();
+                return tmp;
+            }
+        }
         void print(){
             if (isEmpty()){
                 cout << "Empty Stack" << endl;

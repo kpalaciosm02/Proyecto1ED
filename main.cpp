@@ -12,10 +12,14 @@ int main(){
     cout << endl;
 
     cardStack * cStack = new cardStack();
-    cout << cStack->isEmpty();
+    cout << cStack->isEmpty() << endl;
     cStack->print();
     cStack->push("prueba1");
     cStack->print();
     cStack->push("prueba2");
+    cStack->print();
+    cStack->push("prueba3");
+    cStack->print();
+    cStack->pop();
     cStack->print();
 }
