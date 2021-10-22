@@ -9,12 +9,15 @@ class cardStack{
         cardNode * top;
     public:
         cardStack(){
+            //Constructor method
             top = NULL;
         }
         bool isEmpty(){
+            //returns true if the stack is empty
             return top == NULL;
         }
-        bool push(string _name){
+        void push(string _name){
+            //adds a card to the top of the stack
             cardNode * tmpNode = new cardNode(_name);
             if (isEmpty()){
                 top = tmpNode;
@@ -25,6 +28,7 @@ class cardStack{
             }
         }
         cardNode * get_top(){
+            //returns the top of the stack, but doesn't delete it
             if (isEmpty()){
                 return NULL;
             }
@@ -33,6 +37,7 @@ class cardStack{
             }
         }
         cardNode * pop(){
+            //deletes the top of the stack and returns it
             if (isEmpty())
                 cout << "Empty Stack given" << endl;
             else{
@@ -42,6 +47,7 @@ class cardStack{
             }
         }
         void print(){
+            //prints the data in the stack
             if (isEmpty()){
                 cout << "Empty Stack" << endl;
             }

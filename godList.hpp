@@ -4,16 +4,20 @@
 #define GLIST
 
 class godList{
+    //List of gods
     private:
         godNode * firstNode;
     public:
         godList(){
+            //Constructor method
             firstNode = NULL;
         }
         bool isEmpty(){
+            //returns true if the list is empty
             return firstNode == NULL;
         }
         void append(godNode * _node){
+            //adds a god at the end of the list
             if (isEmpty())
                 firstNode = _node;
             else{
@@ -25,6 +29,7 @@ class godList{
             }
         }
         void addStart(godNode * _node){
+            //adds a god at the start of the list
             if (isEmpty())
                 firstNode = _node;
             else{
@@ -33,6 +38,7 @@ class godList{
             }
         }
         int length(){
+            //returns the length of the list
             if (isEmpty())
                 return 0;
             else{
