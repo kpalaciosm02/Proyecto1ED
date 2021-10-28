@@ -1,0 +1,86 @@
+{
+    "dioses": [
+        {
+            "name" : "Zeus",
+            "fieles" : 10100
+        },
+        {
+            "name" : "Afrodita",
+            "fieles" : 50401
+        },
+        {
+            "name" : "Agni",
+            "fieles" : 13028
+        },
+        {
+            "name" : "Anubis",
+            "fieles" : 17215
+        },
+        {
+            "name" : "Apolo",
+            "fieles" : 12367
+        },
+        {
+            "name" : "Ares",
+            "fieles" : 19234
+        },
+        {
+            "name" : "Atenea",
+            "fieles" : 89213
+        },
+        {
+            "name" : "Baco",
+            "fieles" : 39213
+        },
+        {
+            "name" : "Bastet",
+            "fieles" : 99999
+        },
+        {
+            "name" : "Discordia",
+            "fieles" : 98213
+        },
+        {
+            "name" : "Loki",
+            "fieles" : 12387
+        },
+        {
+            "name" : "Hades",
+            "fieles" : 21398
+        },
+        {
+            "name" : "Hera",
+            "fieles" : 29884
+        },
+        {
+            "name" : "Horus",
+            "fieles" : 89123
+        },
+        {
+            "name" : "Isis",
+            "fieles" : 71233
+        },
+        {
+            "name" : "Kali",
+            "fieles" : 21378
+        },
+        {
+            "name" : "Mercurio",
+            "fieles" : 58783
+        },
+        {
+            "name" : "Saturno",
+            "fieles" : 64219
+        },
+        {
+            "name" : "Osiris",
+            "fieles" : 61293
+        },
+        {
+            "name" : "Ra",
+            "fieles" : 47612
+        }
+        
+
+    ]
+}
