@@ -36,7 +36,6 @@ int main(){
     gQueue->enqueue(gNode);
     gQueue->print();
     gQueue->enqueue(gNode2);
-    //gQueue->dequeue();
     gQueue->print();
     gQueue->enqueue(gNode3);
     gQueue->print();
@@ -47,8 +46,7 @@ int main(){
     tmp->print();
     cout << endl;
     gQueue->print();
-    God * god = new God(100, "Athenea");
-
+    //arbol AVL
     Node * root = NULL;
     root = insert(root,gNode);
     root = insert(root,gNode2);
@@ -56,7 +54,5 @@ int main(){
     root = insert(root,gNode4);
     root = insert(root,gNode5);
     postOrder(root);
-
-    //god->clearPrint();
     
 }

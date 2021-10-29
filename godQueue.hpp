@@ -32,6 +32,7 @@ class godQueue{
             }
         }
         void enqueue(godNode * _node){
+            //puts a new element ordered by followers amount in the queue
             if (isEmpty()){
                 front = rear = _node;
             }   
@@ -74,6 +75,7 @@ class godQueue{
             }
         }
         godNode * dequeue(){
+            //returns the last element from the queue and deletes it
             godNode * res;
             godNode * tmp;
             if (isEmpty()){
