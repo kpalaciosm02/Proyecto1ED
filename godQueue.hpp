@@ -73,6 +73,29 @@ class godQueue{
                 }
             }
         }
+        godNode * dequeue(){
+            godNode * res;
+            godNode * tmp;
+            if (isEmpty()){
+                cout << "Empty queue." << endl;
+                return NULL;
+            }
+            else if(front == rear){
+                res = front;
+                front = rear = NULL;
+                return res;
+            }
+            else{
+                res = rear;
+                tmp = front;
+                while (tmp->get_next() != res){
+                    tmp = tmp->get_next();
+                }
+                rear = tmp;
+                tmp->set_next(NULL);
+                return res;
+            }
+        }
         void print(){
             if (isEmpty())
                 cout << "Empty queue." << endl;

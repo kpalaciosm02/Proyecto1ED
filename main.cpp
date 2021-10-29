@@ -36,11 +36,16 @@ int main(){
     gQueue->enqueue(gNode);
     gQueue->print();
     gQueue->enqueue(gNode2);
+    //gQueue->dequeue();
     gQueue->print();
     gQueue->enqueue(gNode3);
     gQueue->print();
     gQueue->enqueue(gNode4);
     gQueue->enqueue(gNode5);
+    gQueue->print();
+    godNode * tmp = gQueue->dequeue();
+    tmp->print();
+    cout << endl;
     gQueue->print();
     God * god = new God(100, "Athenea");
 
