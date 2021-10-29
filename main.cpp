@@ -3,6 +3,9 @@
 #include "godQueue.hpp"
 #include "cardNode.hpp"
 #include "cardStack.hpp"
+#include "godAVL.hpp"
+
+using namespace std;
 
 int main(){
     /*Card card1("milagro");
@@ -40,5 +43,15 @@ int main(){
     gQueue->enqueue(gNode5);
     gQueue->print();
     God * god = new God(100, "Athenea");
+
+    Node * root = NULL;
+    root = insert(root,gNode);
+    root = insert(root,gNode2);
+    root = insert(root,gNode3);
+    root = insert(root,gNode4);
+    root = insert(root,gNode5);
+    postOrder(root);
+
     //god->clearPrint();
+    
 }
