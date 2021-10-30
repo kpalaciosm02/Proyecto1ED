@@ -31,6 +31,9 @@ class Node{
         int get_height(){
             return height;
         }
+        godNode * getNode(){
+            return godN;
+        }
         void set_key(){
             key = godN->get_god().get_followers();
         }
@@ -133,7 +136,7 @@ Node * insert(Node * node, godNode * tmp){
 
 void postOrder(Node * root){
     if (root != NULL){
-        cout << root->get_key() << "[";
+        cout <<root->getNode()->get_god().get_name() << ":" << root->get_key() << "[";
         postOrder(root->get_right());
         cout << "][";
         postOrder(root->get_left());
@@ -141,3 +144,10 @@ void postOrder(Node * root){
     }
 }
 #endif
+/*Node * root = NULL;   como usar este avl
+    root = insert(root,gNode);
+    root = insert(root,gNode2);
+    root = insert(root,gNode3);
+    root = insert(root,gNode4);
+    root = insert(root,gNode5);
+    postOrder(root);*/

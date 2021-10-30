@@ -38,7 +38,7 @@ class godQueue{
             }   
             else{
                 if (front->get_next() == NULL){
-                    if (front->get_god().get_followers() < _node->get_god().get_followers()){
+                    if (front->get_god().get_followers() <= _node->get_god().get_followers()){
                         rear = _node;
                         front->set_next(rear);
                     }
@@ -49,7 +49,7 @@ class godQueue{
                     }
                 }
                 else{
-                    if (front->get_god().get_followers() > _node->get_god().get_followers()){
+                    if (front->get_god().get_followers() >= _node->get_god().get_followers()){
                         _node->set_next(front);
                         front = _node;
                     }
@@ -60,7 +60,7 @@ class godQueue{
                     else{
                         godNode * tmp = front;
                         while (tmp->get_next() != NULL){
-                            if (tmp->get_next()->get_god().get_followers() > _node->get_god().get_followers() && tmp->get_god().get_followers() < _node->get_god().get_followers()){
+                            if (tmp->get_next()->get_god().get_followers() >= _node->get_god().get_followers() && tmp->get_god().get_followers() <= _node->get_god().get_followers()){
                                 godNode * tmpNext = tmp->get_next();
                                 tmp->set_next(_node);
                                 _node->set_next(tmpNext);
@@ -97,6 +97,12 @@ class godQueue{
                 tmp->set_next(NULL);
                 return res;
             }
+        }
+        godNode * last(){
+            return rear;
+        }
+        godNode * first(){
+            return front;
         }
         void print(){
             if (isEmpty())
