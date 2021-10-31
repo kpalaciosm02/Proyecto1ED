@@ -40,6 +40,20 @@ class avlTree{
 	        return f;
         }
         //methods to rotate nodes in the tree
+        avl_node * rightRotate(avl_node * y){
+            avl_node * x = y->left;
+            avl_node * t2 = x->right;
+            x->right = y;
+            y->left = t2;
+            return x;
+        }
+        avl_node * leftRotate(avl_node * x){
+            avl_node * y = x->right;
+            avl_node * t2 = y->left;
+            y->left = x;
+            x->right = t2;
+            return y;
+        }
         avl_node * rr_rotation(avl_node * parent){//right-right case
             avl_node * tmp = parent->right;
             parent->right = tmp->left;
@@ -88,15 +102,81 @@ class avlTree{
                 root->right = NULL;
                 return root;
             }
-            else if (data <= root->data){
+            else if (data < root->data){
                 root->left = insert(root->left,god);
                 root = balance(root);
             }
-            else if (data > root->data){
+            else if (data >= root->data){
                 root->right = insert(root->right,god);
                 root = balance(root);
             }
             return root;
+        }
+        avl_node * findMin(avl_node * t){
+            if (t == NULL)
+                return NULL;
+            else if (t->left == NULL)
+                return t;
+            else
+                return findMin(t->left);
+        }
+        avl_node * remove(avl_node * root, godNode * god){//searches god by followers and name and deletes it if found.
+            int key = god->get_god().get_followers();//searching node
+            //cout << god->get_god().get_name() << ":" << key << endl;
+            if (root == NULL)
+                return root;
+            else if (key < root->data)
+                root->left = remove(root->left, god);
+            else if (key > root->data)
+                root->right = remove(root->right, god);
+            else if (god->get_god().get_name() != root->god->get_god().get_name()){
+                root->right = remove(root->right, god);
+            }
+            else{//node found
+                if ((root->left == NULL) || root->right == NULL){
+                    avl_node * tmp = root->left ? root->left : root->right;
+                    if (tmp == NULL){
+                        tmp = root;
+                        root = NULL;
+                    }
+                    else{
+                        *root = *tmp;
+                    }
+                    free(tmp);
+                }
+                /*else if((root->left == NULL) && (root->right == NULL)){
+                    root = NULL;
+                }*/
+                else{
+                   avl_node * tmp = findMin(root->right);
+                   root->data = tmp->data;
+                   root->god = tmp->god; 
+                   root->right = remove(root->right, tmp->god);
+                }
+            }
+            if (root == NULL)
+                return NULL;
+            root = balance(root);
+            /*int balanceFactor = diff(root);
+            if (balanceFactor > 1){
+                if (diff(root->left) >= 0 ){
+                    return rightRotate(root);
+                }
+                else{
+                    root->left = leftRotate(root->left);
+                    return rightRotate(root);
+                }
+            }
+            else if (balanceFactor < -1){
+                if (diff(root->right) <= 0){
+                    return leftRotate(root);
+                }
+                else{
+                    root->right = rightRotate(root->right);
+                    return leftRotate(root);
+                }
+            }*/
+            return root; 
         }
         void printAVL(avl_node * root){
             if (root != NULL){
@@ -106,7 +186,16 @@ class avlTree{
                 printAVL(root->left);
                 cout << "]";
             }
-        }    
+        }
+        void preOrder(avl_node * root){
+            if (root != NULL){
+                cout << root->god->get_god().get_name() << ":" << root->god->get_god().get_followers() << "[";
+                preOrder(root->left);
+                cout << "][";
+                preOrder(root->right);
+                cout << "]";
+            }
+        } 
 };
 
 #endif
