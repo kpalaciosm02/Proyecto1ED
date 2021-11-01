@@ -5,8 +5,79 @@
 #include "cardStack.hpp"
 //#include "godAVL.hpp"
 #include "godAVL2.hpp"
+#include <ctime>
+#include <cstdlib>
+#include <windows.h>
 
 using namespace std;
+
+cardStack * fillStack(cardStack * stack, int milagro, int traicion, int nuevo_dios, int retorno, int muerte){
+    //fills the stack of cards
+    int actual_milagro = 0;
+    int actual_traicion = 0;
+    int actual_nuevo_dios = 0;
+    int actual_retorno = 0;
+    int actual_muerte = 0;
+    /*for (int i = 0; i < milagro; i++){
+        stack->push("Milagro");
+    }
+    for (int i = 0; i < traicion; i++){
+        stack->push("Traicion");
+    }
+    for (int i = 0; i < nuevo_dios; i++){
+        stack->push("Nuevo Dios");
+    }
+    for (int i = 0; i < retorno; i++){
+        stack->push("Retorno");
+    }
+    for (int i = 0; i < muerte; i++){
+        stack->push("Muerte");
+    }*/
+    int actual_size = 0;
+    int max_size = milagro+traicion+nuevo_dios+retorno+muerte;
+    while (actual_size < max_size){
+        srand(time(0));
+        int number = rand() % 5 + 1;
+        if (number == 1){
+            if (actual_milagro < milagro){
+                stack->push("Milagro");
+                actual_milagro ++;
+                actual_size ++;
+            }
+            
+        }
+        else if (number == 2){
+            if (actual_traicion < traicion){
+                stack->push("Traicion");
+                actual_traicion++;
+                actual_size++;
+            }
+        }
+        else if (number == 3){
+            if (actual_nuevo_dios < nuevo_dios){
+                stack->push("Nuevo Dios");
+                actual_nuevo_dios++;
+                actual_size++;
+            }
+        }
+        else if (number == 4){
+            if (actual_retorno < retorno){
+                stack->push("Retorno");
+                actual_retorno++;
+                actual_size++;
+            }
+        }
+        else if (number == muerte){
+            if (actual_muerte < muerte){
+                stack->push("Muerte");
+                actual_muerte++;
+                actual_size++;
+            }
+        }
+    Sleep(1000);
+    }
+    return stack;
+}
 
 avlTree llenarAVL(avlTree avl, godQueue * queue){
     //uses an AVL and a queue to fill the avl with the gods from the queue
@@ -156,4 +227,9 @@ int main(){
 //    avl.remove(avl.root,gNode3);
 //    avl.remove(avl.root,gNode2);
 //    avl.printAVL(avl.root);
+    cardStack * cStack = new cardStack();
+    cout << cStack->isEmpty() << endl;
+    cStack->print();
+    cStack = fillStack(cStack,1,2,3,4,5);
+    cStack->print();
 }
