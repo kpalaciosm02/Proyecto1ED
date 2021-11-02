@@ -5,7 +5,8 @@ using namespace std;
 #ifndef AVLNODE
 #define AVLNODE
 
-struct avl_node{
+class avl_node{
+    public:
     godNode * god;
     int data;
     avl_node * left;

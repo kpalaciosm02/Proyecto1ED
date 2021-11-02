@@ -11,30 +11,17 @@
 
 using namespace std;
 
-cardStack * fillStack(cardStack * stack, int milagro, int traicion, int nuevo_dios, int retorno, int muerte){
+cardStack * fillStack(cardStack * stack, int milagro, int traicion, int nuevo_dios, int retorno, int muerte, int anarquia, int uni){
     //fills the stack of cards
     int actual_milagro = 0;
     int actual_traicion = 0;
     int actual_nuevo_dios = 0;
     int actual_retorno = 0;
     int actual_muerte = 0;
-    /*for (int i = 0; i < milagro; i++){
-        stack->push("Milagro");
-    }
-    for (int i = 0; i < traicion; i++){
-        stack->push("Traicion");
-    }
-    for (int i = 0; i < nuevo_dios; i++){
-        stack->push("Nuevo Dios");
-    }
-    for (int i = 0; i < retorno; i++){
-        stack->push("Retorno");
-    }
-    for (int i = 0; i < muerte; i++){
-        stack->push("Muerte");
-    }*/
+    int actual_anarquia = 0;
+    int actual_union = 0;
     int actual_size = 0;
-    int max_size = milagro+traicion+nuevo_dios+retorno+muerte;
+    int max_size = milagro+traicion+nuevo_dios+retorno+muerte+anarquia+uni;
     while (actual_size < max_size){
         srand(time(0));
         int number = rand() % 5 + 1;
@@ -67,11 +54,25 @@ cardStack * fillStack(cardStack * stack, int milagro, int traicion, int nuevo_di
                 actual_size++;
             }
         }
-        else if (number == muerte){
+        else if (number == 5){
             if (actual_muerte < muerte){
                 stack->push("Muerte");
                 actual_muerte++;
                 actual_size++;
+            }
+        }
+        else if (number == 6){
+            if (actual_anarquia < anarquia){
+                stack->push("Anarquia");
+                actual_anarquia ++;
+                actual_size ++;
+            }
+        }
+        else if (number == 7){
+            if (actual_union < uni){
+                stack->push("Union");
+                actual_union ++;
+                actual_size ++;
             }
         }
     Sleep(1000);
@@ -84,8 +85,6 @@ avlTree llenarAVL(avlTree avl, godQueue * queue){
     godNode * tmp = queue->first();
     while (tmp != NULL){
         avl.root = avl.insert(avl.root,tmp);
-        //avl.preOrder(avl.root);
-        //cout << endl;
         tmp = tmp->get_next();
     }
     return avl;
@@ -139,25 +138,36 @@ avl_node * anarquia(avlTree avl, godQueue * queue){
         return NULL;
 }
 
-int main(){
-    /*Card card1("milagro");
-    card1.cleanPrint();
-    cout << endl;
-    cardNode cNode1("traicion");
-    cNode1.print();
-    cout << endl;
+string create_new_name(int counter){
+    string name = "New God " + to_string(counter);
+    return name;
+}
 
-    cardStack * cStack = new cardStack();
-    cout << cStack->isEmpty() << endl;
-    cStack->print();
-    cStack->push("prueba1");
-    cStack->print();
-    cStack->push("prueba2");
-    cStack->print();
-    cStack->push("prueba3");
-    cStack->print();
-    cStack->pop();
-    cStack->print();*/
+avlTree new_god(avlTree avl, godQueue * queue, int new_god_counter){
+    godNode * a = queue->dequeue();
+    godNode * b = queue->dequeue();
+    int new_follower_amount = a->get_god().get_followers() + b->get_god().get_followers();
+    string new_name = create_new_name(new_god_counter);
+    godNode * new_node = new godNode(new_name,new_follower_amount);
+    avl.root = avl.insert(avl.root,new_node);
+    queue->enqueue(a);
+    queue->enqueue(b);
+    queue->enqueue(new_node);
+    return avl;
+}
+
+avlTree muerte(avlTree avl, godQueue  * queue){
+    godNode * a = queue->dequeue();
+    avl.root = avl.remove(avl.root,a);
+    God ga = a->get_god();
+    ga.set_followers(ga.get_followers()*0.9);
+    a->set_god(ga);
+    queue->enqueue(a);
+    avl.root = avl.insert(avl.root,a);
+    return avl;
+}
+
+int main(){
     godNode * gNode = new godNode("Athenea",170);
     godNode * gNode2 = new godNode("Zeus", 160);
     godNode * gNode3 = new godNode("Hades", 200);
@@ -169,9 +179,15 @@ int main(){
     godNode * gNode9 = new godNode("Apollo", 291);
     godNode * gNode10 = new godNode("Ares", 111);
     godNode * gNode11 = new godNode("Artemisa", 165);
-    godNode * gNode12 = new godNode("Apollo", 154);
+    godNode * gNode12 = new godNode("Thoth", 154);
     godNode * gNode13 = new godNode("Poseidon", 119);
     godNode * gNode14 = new godNode("Hercules", 302);
+    godNode * gNode15 = new godNode("Freya", 132);
+    godNode * gNode16 = new godNode("Khepri", 231);
+    godNode * gNode17 = new godNode("Tepin", 174);
+    godNode * gNode18 = new godNode("Odin", 300);
+    godNode * gNode19 = new godNode("Anubis", 176);
+    godNode * gNode20 = new godNode("Medusa", 247);
     godQueue * gQueue = new godQueue();
     //gQueue->print();
     gQueue->enqueue(gNode);
@@ -191,45 +207,35 @@ int main(){
     gQueue->enqueue(gNode12);
     gQueue->enqueue(gNode13);
     gQueue->enqueue(gNode14);
+    gQueue->enqueue(gNode15);
+    gQueue->enqueue(gNode16);
+    gQueue->enqueue(gNode17);
+    gQueue->enqueue(gNode18);
+    gQueue->enqueue(gNode19);
+    gQueue->enqueue(gNode20);
+
     gQueue->print();
     //arbol AVL
     avlTree avl;
     avl = llenarAVL(avl,gQueue);
-    avl.printAVL(avl.root); 
-    cout << endl << "Milagro1" << endl;  
+    avl.printAVL(avl.root);
+    cout << endl; 
+    /*cout << "Milagro1" << endl;  
     avl = milagro(avl,gQueue);
     avl.printAVL(avl.root);
     cout << endl << "Traicion1" << endl;
     gQueue->print();
     avl = traicion(avl,gQueue);
     avl.printAVL(avl.root);
-    /*cout << endl << "Milagro2" << endl;
-    avl = milagro(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl << "Traicion2" << endl;
-    gQueue->print();
-    avl = traicion(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl << "Milagro3" << endl;
-    avl = milagro(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl << "Traicion3" << endl;
-    gQueue->print();
-    avl = traicion(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl << "Milagro4" << endl;
-    avl = milagro(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl << "Traicion4" << endl;
-    gQueue->print();
-    avl = traicion(avl,gQueue);
-    avl.printAVL(avl.root);*/
-//    avl.remove(avl.root,gNode3);
-//    avl.remove(avl.root,gNode2);
-//    avl.printAVL(avl.root);
+    cout << endl;
     cardStack * cStack = new cardStack();
-    cout << cStack->isEmpty() << endl;
-    cStack->print();
-    cStack = fillStack(cStack,1,2,3,4,5);
-    cStack->print();
+
+    cStack = fillStack(cStack,1,2,3,4,5,0,0);
+    cStack->print();*/
+    //avl = new_god(avl,gQueue,1);
+    avl = muerte(avl,gQueue);
+    avl.printAVL(avl.root);
+    cout << endl;
+    gQueue->print();
+
 }
