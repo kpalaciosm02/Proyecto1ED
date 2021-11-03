@@ -8,6 +8,8 @@
 #include <ctime>
 #include <cstdlib>
 #include <windows.h>
+#include <conio.h>
+#include <stdio.h>
 
 using namespace std;
 
@@ -91,9 +93,15 @@ avlTree llenarAVL(avlTree avl, godQueue * queue){
 }
 
 avlTree milagro(avlTree avl, godQueue * queue){
+    cout << "----Milagro----" << endl;
     //realiza la accion de la carta milagro
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
+    cout << "Dios 1:";
+    a->print();
+    cout << "Dios 2:";
+    b->print();
+    cout << "\nRealizando milagro." << endl;
     int extra20 = b->get_god().get_followers()*0.2;
     avl.root = avl.remove(avl.root,a);
     avl.root = avl.remove(avl.root,b);
@@ -103,6 +111,11 @@ avlTree milagro(avlTree avl, godQueue * queue){
     ga.set_followers(ga.get_followers()+extra20);
     a->set_god(ga);
     b->set_god(gb);
+    cout << "Dios 1:";
+    a->print();
+    cout << "Dios 2:";
+    b->print();
+    cout << endl;
     queue->enqueue(a);
     queue->enqueue(b);
     avl.root = avl.insert(avl.root,a);
@@ -114,6 +127,10 @@ avlTree traicion(avlTree avl, godQueue * queue){
     //realiza la accion de la carta traicion
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
+    cout << "Dios 1:";
+    a->print();
+    cout << "Dios 2:";
+    b->print();
     int extra30 = a->get_god().get_followers()*0.3;
     avl.root = avl.remove(avl.root,a);
     avl.root = avl.remove(avl.root,b);
@@ -123,6 +140,12 @@ avlTree traicion(avlTree avl, godQueue * queue){
     gb.set_followers(gb.get_followers()+extra30);
     a->set_god(ga);
     b->set_god(gb);
+    cout << "\nRealizando traicion." << endl;
+    cout << "Dios 1:";
+    a->print();
+    cout << "Dios 2:";
+    b->print();
+    cout << endl;
     queue->enqueue(a);
     queue->enqueue(b);
     avl.root = avl.insert(avl.root,a);
@@ -130,12 +153,13 @@ avlTree traicion(avlTree avl, godQueue * queue){
     return avl;
 }
 
-avl_node * anarquia(avlTree avl, godQueue * queue){
-    godNode * a = queue->dequeue();
+void anarquia(avlTree avl, godQueue * queue){
+    cout << "Realizando anarquia" << endl;
+    /*godNode * a = queue->dequeue();
     int key = a->get_god().get_followers();
     avl_node * tmp = avl.root;
     if (tmp == NULL)
-        return NULL;
+        return NULL;*/
 }
 
 string create_new_name(int counter){
@@ -146,10 +170,17 @@ string create_new_name(int counter){
 avlTree new_god(avlTree avl, godQueue * queue, int new_god_counter){
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
+    cout << "Dios 1:";
+    a->print();
+    cout << "Dios 2:";
+    b->print();
     int new_follower_amount = a->get_god().get_followers() + b->get_god().get_followers();
     string new_name = create_new_name(new_god_counter);
     godNode * new_node = new godNode(new_name,new_follower_amount);
     avl.root = avl.insert(avl.root,new_node);
+    cout << "\nNuevo Dios:";
+    new_node->print();
+    cout << endl;
     queue->enqueue(a);
     queue->enqueue(b);
     queue->enqueue(new_node);
@@ -157,14 +188,133 @@ avlTree new_god(avlTree avl, godQueue * queue, int new_god_counter){
 }
 
 avlTree muerte(avlTree avl, godQueue  * queue){
+    cout << "\n--------Muerte--------" << endl << endl;
     godNode * a = queue->dequeue();
+    cout << "Dios 1:";
+    a->print();
+    cout << endl;
     avl.root = avl.remove(avl.root,a);
     God ga = a->get_god();
     ga.set_followers(ga.get_followers()*0.9);
     a->set_god(ga);
+    cout << "Dios 1 muere.\nDios 1:";
+    a->print();
+    cout << endl;
     queue->enqueue(a);
     avl.root = avl.insert(avl.root,a);
     return avl;
+}
+
+cardNode * fillRetornoMemory(cardNode array[], cardNode cardToAdd){
+    if (array[0].get_card().get_name() == ""){
+        array[0] = cardToAdd;
+    }
+    else if (array[1].get_card().get_name() == ""){
+        array[1] = array[0];
+        array[0] = cardToAdd;
+    }
+    else if (array[2].get_card().get_name() == ""){
+        array[2] = array[1];
+        array[1] = array[0];
+        array[0] = cardToAdd;
+    }
+    else{
+        array[0] = array[1];
+        array[1] = array[2];
+        array[2] = cardToAdd;
+    }
+    return array;
+}
+
+void turno(avlTree  avl, godQueue * gQueue, cardNode array[3]){
+    int new_god_counter = 0;
+    cardStack * cStack = new cardStack();
+    cStack = fillStack(cStack,5,4,4,0,10,0,0);
+    cStack->print();
+    while (true){
+        //while (!kbhit()){
+            if (cStack->isEmpty() == true){
+                cStack = fillStack(cStack,5,4,4,0,10,0,0);
+            }
+            cardNode * card = cStack->pop();
+            array = fillRetornoMemory(array,*card);
+            string cardS = card->get_card().get_name();
+            if (cardS == "Milagro"){
+                avl = milagro(avl, gQueue);
+                fillRetornoMemory(array,*card);
+                Sleep(3000);
+            }
+            else if (cardS == "Traicion"){
+                avl = traicion(avl,gQueue);
+                fillRetornoMemory(array,*card);
+                Sleep(3000);
+            }
+            else if (cardS == "Nuevo Dios"){
+                avl = new_god(avl,gQueue,new_god_counter);
+                new_god_counter ++;
+                fillRetornoMemory(array,*card);
+                Sleep(3000);
+            }
+            else if (cardS == "Retorno"){
+                if (array[0].get_card().get_name() == ""){
+                    fillRetornoMemory(array,*card);
+                    cout << "No hay cartas guardadas para retorno." << endl;
+                }
+                else if (array[1].get_card().get_name() == ""){
+                    fillRetornoMemory(array,*card);
+                    cStack->push(array[0].get_card().get_name());
+                }
+                else if (array[2].get_card().get_name() == ""){
+                    fillRetornoMemory(array,*card);
+                    cStack->push(array[0].get_card().get_name());
+                    cStack->push(array[1].get_card().get_name());
+                }
+                else if (array[2].get_card().get_name() != ""){
+                    fillRetornoMemory(array,*card);
+                    cStack->push(array[0].get_card().get_name());
+                    cStack->push(array[1].get_card().get_name());
+                    cStack->push(array[2].get_card().get_name());
+                }
+                Sleep(3000);
+            }
+            else if (cardS == "Muerte"){
+                fillRetornoMemory(array,*card);
+                avl = muerte(avl,gQueue);
+                Sleep(3000);
+            }
+            else if (cardS == "Anarquia"){
+                fillRetornoMemory(array,*card);
+                cout << "No hay anarquia" << endl;
+                Sleep(3000);
+            }
+            else if (cardS == "Union"){
+                fillRetornoMemory(array,*card);
+                cout << "No hay union" << endl;
+                Sleep(3000);
+            }
+        //}
+        /*char tecla = getch();
+        if (tecla == 'p'){
+            getch();
+        }*/
+    }
+    //system("pause");
+}
+
+void turno2(bool running){
+    int numero = 0;
+    while (running){
+        while (!kbhit){
+            cout << numero << endl;
+            Sleep(1000);
+            numero++;
+        }
+        char tecla = getch();
+        if (tecla == 'p'){
+            getch();
+        }
+    }
+    running = false;
 }
 
 int main(){
@@ -189,13 +339,9 @@ int main(){
     godNode * gNode19 = new godNode("Anubis", 176);
     godNode * gNode20 = new godNode("Medusa", 247);
     godQueue * gQueue = new godQueue();
-    //gQueue->print();
     gQueue->enqueue(gNode);
-    //gQueue->print();
     gQueue->enqueue(gNode2);
-    //gQueue->print();
     gQueue->enqueue(gNode3);
-    //gQueue->print();
     gQueue->enqueue(gNode4);
     gQueue->enqueue(gNode5);
     gQueue->enqueue(gNode6);
@@ -218,24 +364,14 @@ int main(){
     //arbol AVL
     avlTree avl;
     avl = llenarAVL(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl; 
-    /*cout << "Milagro1" << endl;  
-    avl = milagro(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl << "Traicion1" << endl;
-    gQueue->print();
-    avl = traicion(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl;
-    cardStack * cStack = new cardStack();
-
+    /*cardStack * cStack = new cardStack();
     cStack = fillStack(cStack,1,2,3,4,5,0,0);
     cStack->print();*/
-    //avl = new_god(avl,gQueue,1);
-    avl = muerte(avl,gQueue);
-    avl.printAVL(avl.root);
-    cout << endl;
-    gQueue->print();
-
+    cardNode array[3];
+    turno(avl,gQueue,array);
+    //turno2(true);
+    /*cardNode * tmp = fillRetornoMemory(array, Card4);
+    cout << "Carta 1";
+    tmp->print();
+    tmp[1].print();*/
 }

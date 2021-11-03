@@ -123,7 +123,6 @@ class avlTree{
         }
         avl_node * remove(avl_node * root, godNode * god){//searches god by followers and name and deletes it if found.
             int key = god->get_god().get_followers();//searching node
-            //cout << god->get_god().get_name() << ":" << key << endl;
             if (root == NULL)
                 return root;
             else if (key < root->data)

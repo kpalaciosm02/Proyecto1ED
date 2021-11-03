@@ -42,8 +42,11 @@ class cardNode{
         }
         void print(){
             //prints the data of the node
-            card.cleanPrint();
-            cout << "->";
+            if (this != NULL){
+                card.cleanPrint();
+                cout << "->";
+            }
+            
         }
 };
 
