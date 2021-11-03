@@ -93,7 +93,7 @@ avlTree llenarAVL(avlTree avl, godQueue * queue){
 }
 
 avlTree milagro(avlTree avl, godQueue * queue){
-    cout << "----Milagro----" << endl;
+    cout << "\n------Milagro------" << endl << endl;
     //realiza la accion de la carta milagro
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
@@ -125,6 +125,7 @@ avlTree milagro(avlTree avl, godQueue * queue){
 
 avlTree traicion(avlTree avl, godQueue * queue){
     //realiza la accion de la carta traicion
+    cout << "\n-------Traicion--------" << endl << endl;
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
     cout << "Dios 1:";
@@ -168,6 +169,7 @@ string create_new_name(int counter){
 }
 
 avlTree new_god(avlTree avl, godQueue * queue, int new_god_counter){
+    cout << "n--------Nuevo Dios--------" << endl << endl;
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
     cout << "Dios 1:";
