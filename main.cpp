@@ -6,7 +6,7 @@
 //#include "godAVL.hpp"
 #include "godAVL2.hpp"
 #include <ctime>
-#include <cstdlib>
+//#include <cstdlib>
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
@@ -228,95 +228,61 @@ cardNode * fillRetornoMemory(cardNode array[], cardNode cardToAdd){
     return array;
 }
 
-void turno(avlTree  avl, godQueue * gQueue, cardNode array[3]){
+void turno(avlTree  avl, godQueue * gQueue){
+    cardStack * retornoMemory = new cardStack();
     int new_god_counter = 0;
     cardStack * cStack = new cardStack();
     cStack = fillStack(cStack,5,4,4,0,10,0,0);
     cStack->print();
     while (true){
-        //while (!kbhit()){
-            if (cStack->isEmpty() == true){
-                cStack = fillStack(cStack,5,4,4,0,10,0,0);
-            }
-            cardNode * card = cStack->pop();
-            array = fillRetornoMemory(array,*card);
-            string cardS = card->get_card().get_name();
-            if (cardS == "Milagro"){
-                avl = milagro(avl, gQueue);
-                fillRetornoMemory(array,*card);
-                Sleep(3000);
-            }
-            else if (cardS == "Traicion"){
-                avl = traicion(avl,gQueue);
-                fillRetornoMemory(array,*card);
-                Sleep(3000);
-            }
-            else if (cardS == "Nuevo Dios"){
-                avl = new_god(avl,gQueue,new_god_counter);
-                new_god_counter ++;
-                fillRetornoMemory(array,*card);
-                Sleep(3000);
-            }
-            else if (cardS == "Retorno"){
-                if (array[0].get_card().get_name() == ""){
-                    fillRetornoMemory(array,*card);
-                    cout << "No hay cartas guardadas para retorno." << endl;
-                }
-                else if (array[1].get_card().get_name() == ""){
-                    fillRetornoMemory(array,*card);
-                    cStack->push(array[0].get_card().get_name());
-                }
-                else if (array[2].get_card().get_name() == ""){
-                    fillRetornoMemory(array,*card);
-                    cStack->push(array[0].get_card().get_name());
-                    cStack->push(array[1].get_card().get_name());
-                }
-                else if (array[2].get_card().get_name() != ""){
-                    fillRetornoMemory(array,*card);
-                    cStack->push(array[0].get_card().get_name());
-                    cStack->push(array[1].get_card().get_name());
-                    cStack->push(array[2].get_card().get_name());
-                }
-                Sleep(3000);
-            }
-            else if (cardS == "Muerte"){
-                fillRetornoMemory(array,*card);
-                avl = muerte(avl,gQueue);
-                Sleep(3000);
-            }
-            else if (cardS == "Anarquia"){
-                fillRetornoMemory(array,*card);
-                cout << "No hay anarquia" << endl;
-                Sleep(3000);
-            }
-            else if (cardS == "Union"){
-                fillRetornoMemory(array,*card);
-                cout << "No hay union" << endl;
-                Sleep(3000);
-            }
-        //}
-        /*char tecla = getch();
-        if (tecla == 'p'){
-            getch();
-        }*/
+        if (cStack->isEmpty() == true){
+            cStack = fillStack(cStack,5,4,4,0,10,0,0);
+        }
+        cardNode * card = cStack->pop();
+        retornoMemory->push(card->get_card().get_name());
+        string cardS = card->get_card().get_name();
+        if (cardS == "Milagro"){
+            avl = milagro(avl, gQueue);
+            retornoMemory->print();
+        }
+        else if (cardS == "Traicion"){
+            avl = traicion(avl,gQueue);
+            retornoMemory->print();
+        }
+        else if (cardS == "Nuevo Dios"){
+            avl = new_god(avl,gQueue,new_god_counter);
+            new_god_counter ++;
+            retornoMemory->print();
+        }
+        else if (cardS == "Retorno"){
+            
+        }
+        else if (cardS == "Muerte"){
+            avl = muerte(avl,gQueue);
+            retornoMemory->print();
+        }
+        else if (cardS == "Anarquia"){
+            cout << "No hay anarquia" << endl;
+            retornoMemory->print();
+        }
+        else if (cardS == "Union"){
+            cout << "No hay union" << endl;
+            retornoMemory->print();
+        }
+    Sleep(3000);
     }
-    //system("pause");
 }
 
-void turno2(bool running){
-    int numero = 0;
-    while (running){
-        while (!kbhit){
-            cout << numero << endl;
-            Sleep(1000);
-            numero++;
-        }
-        char tecla = getch();
-        if (tecla == 'p'){
-            getch();
+void turno2(){
+    char key;
+    int asciiValue;
+    while (1){
+        cout << "Prueba" << endl;
+        cin >> key;
+        if (key == 's'){
+            break;
         }
     }
-    running = false;
 }
 
 int main(){
@@ -366,14 +332,10 @@ int main(){
     //arbol AVL
     avlTree avl;
     avl = llenarAVL(avl,gQueue);
-    /*cardStack * cStack = new cardStack();
-    cStack = fillStack(cStack,1,2,3,4,5,0,0);
-    cStack->print();*/
-    cardNode array[3];
-    turno(avl,gQueue,array);
-    //turno2(true);
-    /*cardNode * tmp = fillRetornoMemory(array, Card4);
-    cout << "Carta 1";
-    tmp->print();
-    tmp[1].print();*/
+    turno(avl,gQueue);
+    /*int x = 0;
+    cout << "Digite numero: ";
+    cin >> x;
+    cout << "\nSu numero es" << x << endl;*/
+    return 0;
 }

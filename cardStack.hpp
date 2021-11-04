@@ -60,6 +60,14 @@ class cardStack{
                 cout << endl;
             }
         }
+        int size(){
+            int num = 0;
+            cardNode * tmp = top;
+            while (tmp != NULL){
+                tmp = tmp->get_next();
+                
+            }
+        }
 };
 
 #endif
