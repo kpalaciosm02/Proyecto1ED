@@ -301,14 +301,14 @@ void turno(avlTree  avl, godQueue * gQueue){
         }
         Sleep(3000);
         //retornoMemory->print();
-        /*cout << "Desea continuar? s/n:";
+        cout << "Desea continuar? s/n:";
         cin >> key;
         cout << endl;
         //avl.printAVL(avl.root);
         if (key == 'n'){
             avl.printAVL(avl.root);
             break;
-        }*/
+        }
     }
 }
 
