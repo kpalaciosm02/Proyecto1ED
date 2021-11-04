@@ -38,8 +38,11 @@ class cardStack{
         }
         cardNode * pop(){
             //deletes the top of the stack and returns it
-            if (isEmpty())
+            if (isEmpty()){
+
                 cout << "Empty Stack given" << endl;
+                return NULL;
+            }
             else{
                 cardNode * tmp = top;
                 top = top->get_next();
@@ -65,8 +68,9 @@ class cardStack{
             cardNode * tmp = top;
             while (tmp != NULL){
                 tmp = tmp->get_next();
-                
+                num++;
             }
+            return num;
         }
 };
 

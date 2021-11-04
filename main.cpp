@@ -10,7 +10,9 @@
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
-
+//Para correr el programa en terminal
+//g++ ./main.cpp
+//./a.exe
 using namespace std;
 
 cardStack * fillStack(cardStack * stack, int milagro, int traicion, int nuevo_dios, int retorno, int muerte, int anarquia, int uni){
@@ -163,13 +165,37 @@ void anarquia(avlTree avl, godQueue * queue){
         return NULL;*/
 }
 
+void retorno(cardStack * cStack, cardStack * memory){
+    cout << "\n -------Retorno--------" << endl << endl;
+    cStack->print();
+    if (memory->isEmpty() == false){
+        cardNode * retorno = memory->pop(); // retorno
+        cardNode * tmp1 = memory->pop();
+        cardNode * tmp2 = memory->pop();
+        cardNode * tmp3 = memory->pop();
+        if (tmp2 == NULL){
+            cStack->push(tmp1->get_card().get_name());
+        }
+        else if (tmp3 == NULL){
+            cStack->push(tmp1->get_card().get_name());
+            cStack->push(tmp2->get_card().get_name());
+        }
+        else{
+            cStack->push(tmp1->get_card().get_name());
+            cStack->push(tmp2->get_card().get_name());
+            cStack->push(tmp3->get_card().get_name());
+        }
+    }
+    cStack->print();
+}
+
 string create_new_name(int counter){
     string name = "New God " + to_string(counter);
     return name;
 }
 
 avlTree new_god(avlTree avl, godQueue * queue, int new_god_counter){
-    cout << "n--------Nuevo Dios--------" << endl << endl;
+    cout << "\n--------Nuevo Dios--------" << endl << endl;
     godNode * a = queue->dequeue();
     godNode * b = queue->dequeue();
     cout << "Dios 1:";
@@ -207,6 +233,14 @@ avlTree muerte(avlTree avl, godQueue  * queue){
     return avl;
 }
 
+avlTree unionT(avlTree avlPrincipal, avl_node * root_secundario){
+    if (root_secundario != NULL){
+        avlPrincipal.insert(avlPrincipal.root,root_secundario->god);
+        unionT(avlPrincipal,root_secundario->right);
+        unionT(avlPrincipal,root_secundario->left);
+    }
+}
+
 cardNode * fillRetornoMemory(cardNode array[], cardNode cardToAdd){
     if (array[0].get_card().get_name() == ""){
         array[0] = cardToAdd;
@@ -232,8 +266,10 @@ void turno(avlTree  avl, godQueue * gQueue){
     cardStack * retornoMemory = new cardStack();
     int new_god_counter = 0;
     cardStack * cStack = new cardStack();
-    cStack = fillStack(cStack,5,4,4,0,10,0,0);
+    cStack = fillStack(cStack,5,4,4,6,10,0,0);
+    //cout <<cStack->size() << endl;
     cStack->print();
+    char key;
     while (true){
         if (cStack->isEmpty() == true){
             cStack = fillStack(cStack,5,4,4,0,10,0,0);
@@ -243,45 +279,36 @@ void turno(avlTree  avl, godQueue * gQueue){
         string cardS = card->get_card().get_name();
         if (cardS == "Milagro"){
             avl = milagro(avl, gQueue);
-            retornoMemory->print();
         }
         else if (cardS == "Traicion"){
             avl = traicion(avl,gQueue);
-            retornoMemory->print();
         }
         else if (cardS == "Nuevo Dios"){
             avl = new_god(avl,gQueue,new_god_counter);
             new_god_counter ++;
-            retornoMemory->print();
         }
         else if (cardS == "Retorno"){
-            
+            retorno(cStack,retornoMemory);
         }
         else if (cardS == "Muerte"){
             avl = muerte(avl,gQueue);
-            retornoMemory->print();
         }
         else if (cardS == "Anarquia"){
             cout << "No hay anarquia" << endl;
-            retornoMemory->print();
         }
         else if (cardS == "Union"){
             cout << "No hay union" << endl;
-            retornoMemory->print();
         }
-    Sleep(3000);
-    }
-}
-
-void turno2(){
-    char key;
-    int asciiValue;
-    while (1){
-        cout << "Prueba" << endl;
+        Sleep(3000);
+        //retornoMemory->print();
+        /*cout << "Desea continuar? s/n:";
         cin >> key;
-        if (key == 's'){
+        cout << endl;
+        //avl.printAVL(avl.root);
+        if (key == 'n'){
+            avl.printAVL(avl.root);
             break;
-        }
+        }*/
     }
 }
 
@@ -333,9 +360,5 @@ int main(){
     avlTree avl;
     avl = llenarAVL(avl,gQueue);
     turno(avl,gQueue);
-    /*int x = 0;
-    cout << "Digite numero: ";
-    cin >> x;
-    cout << "\nSu numero es" << x << endl;*/
     return 0;
 }
