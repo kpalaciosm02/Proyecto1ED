@@ -28,7 +28,7 @@ cardStack * fillStack(cardStack * stack, int milagro, int traicion, int nuevo_di
     int max_size = milagro+traicion+nuevo_dios+retorno+muerte+anarquia+uni;
     while (actual_size < max_size){
         srand(time(0));
-        int number = rand() % 5 + 1;
+        int number = rand() % 7 + 1;
         if (number == 1){
             if (actual_milagro < milagro){
                 stack->push("Milagro");
@@ -272,7 +272,7 @@ void turno(avlTree  avl, godQueue * gQueue){
     char key;
     while (true){
         if (cStack->isEmpty() == true){
-            cStack = fillStack(cStack,5,4,4,0,10,0,0);
+            cStack = fillStack(cStack,5,4,4,0,10,7,4);
         }
         cardNode * card = cStack->pop();
         retornoMemory->push(card->get_card().get_name());
